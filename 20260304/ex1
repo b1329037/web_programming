@@ -1,0 +1,44 @@
+views.py
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import logging
+
+logger = logging.getLogger('django')
+
+class MyHelloApi(APIView):
+    def get(self, request):
+        logger.info("Someone accessed the MyHello API!")
+        name = request.GET.get('name', None)
+        
+        if name:
+            return Response({"res": f"Hello {name}"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"res": "parameter : name is None"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+urls.py
+
+
+from django.contrib import admin
+from django.urls import path
+from myapp.views import MyHelloApi  
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('myhello/', MyHelloApi.as_view()),
+]    
+
+
+settings.py
+
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "rest_framework",
+    "my_app",
+]
