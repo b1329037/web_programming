@@ -138,7 +138,7 @@ LOGGING = {
 }
 
 
-views.py
+#views.py
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -170,7 +170,7 @@ def add_post(request):
     Post.objects.create(title=title, content=content)
     return JsonResponse({"data":f"{title}insert!"})
 
-urls.py
+#urls.py
 
 from django.contrib import admin
 from django.urls import path
@@ -182,7 +182,7 @@ urlpatterns = [
     path('myhello/add',views.add_post),
 ]    
 
-models.py
+#models.py
 
 from django.db import models
 
