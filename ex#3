@@ -1,4 +1,4 @@
-/index.html/
+//index.html
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -85,7 +85,7 @@
 </html>
 
 
-/view.py/
+//view.py
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -135,7 +135,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-/urls.py/
+//urls.py
 
 from django.contrib import admin
 from django.urls import path
