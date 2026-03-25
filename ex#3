@@ -1,0 +1,106 @@
+/index.html/
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>資工選課表</title>
+    <style>
+        
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px; 
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>資工選課表</h2>
+
+
+/view.py/
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import logging
+from django.http import JsonResponse
+from .models import Post, Course
+from rest_framework.decorators import api_view
+
+logger = logging.getLogger('django')
+
+class MyHelloApi(APIView):
+    def get(self, request):
+        logger.info("Someone accessed the MyHello API!")
+        name = request.GET.get('name', None)
+        
+        if name:
+            return Response({"res": f"Hello {name}"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"res": "parameter : name is None"}, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def list_post(request):
+ posts = Post.objects.all().values()
+ return JsonResponse(list(posts))
+@api_view(['GET'])
+def add_post(request):
+    title = request.GET.get('title')
+    content = request.GET.get('content')
+    Post.objects.create(title=title, content=content)
+    return JsonResponse({"data":f"{title}insert!"})
+@api_view(['GET'])
+def courselist(request):
+    courses = Course.objects.all().values()
+    return JsonResponse(list(courses))
+
+@api_view(['GET'])
+def addcourse(request):
+    dept = request.GET.get('Department')
+    title = request.GET.get('CourseTitle')
+    instr = request.GET.get('Instructor')
+    
+    Course.objects.create(Department=dept, CourseTitle=title, Instructor=instr)
+    return JsonResponse({"data": f"{title} insert!"})
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'index.html')
+
+
+/urls.py/
+
+from django.contrib import admin
+from django.urls import path
+from myapp import views 
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('myhello/', views.MyHelloApi.as_view()),
+    path('myhello/list',views.list_post),
+    path('myhello/add',views.add_post),
+    path('courselist', views.courselist),
+    path('addcourse', views.addcourse),
+    path('index/', views.index),
+]
