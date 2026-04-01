@@ -1,0 +1,16 @@
+function tree(n) {
+  for (let i = 1; i <= n; i++) {
+    let spaces = repeatchar(n - i, ' ');
+    let stars = repeatchar(2 * i - 1, '*');
+    console.log(spaces + stars);
+  }
+  for (let j = 0; j < 3; j++) {
+    console.log(repeatchar(n - 1, ' ') + '*');
+  }
+}
+function repeatchar(count, char) {
+  let res = "";
+  for (let i = 0; i < count; i++) res += char;
+  return res;
+}
+tree(4);
