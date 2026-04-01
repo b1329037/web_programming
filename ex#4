@@ -1,16 +1,36 @@
-function tree(n) {
-  for (let i = 1; i <= n; i++) {
-    let spaces = repeatchar(n - i, ' ');
-    let stars = repeatchar(2 * i - 1, '*');
-    console.log(spaces + stars);
-  }
-  for (let j = 0; j < 3; j++) {
-    console.log(repeatchar(n - 1, ' ') + '*');
-  }
-}
-function repeatchar(count, char) {
-  let res = "";
-  for (let i = 0; i < count; i++) res += char;
-  return res;
-}
-tree(4);
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>JS 聖誕樹練習</title>
+</head>
+<body>
+    <h1>請按 F12 開啟 Console 查看聖誕樹</h1>
+
+    <script>
+        function tree(n) {
+            // 樹冠
+            for (let i = 1; i <= n; i++) {
+                let spaces = repeatchar(n - i, ' ');
+                let stars = repeatchar(2 * i - 1, '*');
+                console.log(spaces + stars);
+            }
+            // 樹幹 (固定 3 行)
+            for (let j = 0; j < 3; j++) {
+                console.log(repeatchar(n - 1, ' ') + '*');
+            }
+        }
+
+        function repeatchar(count, char) {
+            let res = "";
+            for (let i = 0; i < count; i++) {
+                res += char;
+            }
+            return res;
+        }
+
+        // 執行
+        tree(4);
+    </script>
+</body>
+</html>
